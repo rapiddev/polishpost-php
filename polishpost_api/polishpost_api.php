@@ -101,15 +101,41 @@
 			}
 
 			/**
+			* get_last_event
+			*
+			* @return   array    Correct data table
+			* @param    string   $package package number, no spaces or brackets, the default (test) should work
+			* @access   public
+			*/
+			public function get_last_event($package = 'testp0')
+			{
+				$package = $this->get_package($package);
+				
+				if (isset($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']))
+				{
+					$event = end($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']);
+					if (isset($event['nazwa'])) {
+						return $event['nazwa'];
+					}else{
+						return $event;
+					}
+				}
+				else
+				{
+					return NULL;
+				}
+			}
+
+			/**
 			* parse_xml
 			*
-			* @return  array   Correct data table
+			* @return  array   Correct data table or null
 			* @param   string  $xml_data xml data is prepared for processing and then changed from object to table
 			* @access  private
 			*/
 			private function parse_xml($xml_data)
 			{
-				if (strpos($xml_data, 'soapenv:') !== false && function_exists('simplexml_load_string'))
+				if (strpos($xml_data, 'soapenv:') !== FALSE && function_exists('simplexml_load_string'))
 				{
 					return json_decode(json_encode(simplexml_load_string(str_ireplace(['soapenv:', 'ax21:', 'ns:', ':soapenv', 'xsi:'], '', $xml_data))),1);
 				}
@@ -131,8 +157,8 @@
 				$XML_REQUEST = '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://sledzenie.pocztapolska.pl" xmlns:ns2="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"><SOAP-ENV:Header><ns2:Security SOAP-ENV:mustUnderstand="1"><ns2:UsernameToken><ns2:Username>'.$this->username.'</ns2:Username><ns2:Password>'.$this->password.'</ns2:Password></ns2:UsernameToken></ns2:Security></SOAP-ENV:Header><SOAP-ENV:Body><ns1:'.$this->request_urn.'>'.$this->request_body.'</ns1:'.$this->request_urn.'></SOAP-ENV:Body></SOAP-ENV:Envelope>';
 				$SOAP_CURL = curl_init();
 				curl_setopt($SOAP_CURL, CURLOPT_URL, $this->request_url);
-				curl_setopt($SOAP_CURL, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($SOAP_CURL, CURLOPT_POST, true);
+				curl_setopt($SOAP_CURL, CURLOPT_RETURNTRANSFER, TRUE);
+				curl_setopt($SOAP_CURL, CURLOPT_POST, TRUE);
 				curl_setopt($SOAP_CURL, CURLOPT_POSTFIELDS, $XML_REQUEST);
 				curl_setopt($SOAP_CURL, CURLOPT_HTTPHEADER,array('Connection: Keep-Alive','User-Agent: PHP-SOAP/7.1.1','Content-Type: text/xml; charset=utf-8','SOAPAction: "urn:'.$this->request_urn.'"','Content-length: '.strlen($XML_REQUEST)));
 				$result = curl_exec($SOAP_CURL);
