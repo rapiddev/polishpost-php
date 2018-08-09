@@ -15,6 +15,11 @@ Download information from Polish Post, without using Soap, without knowing WSDL.
 ## Use in your applications
 With the help of this simple class, you can easily use the Polish Post API in your applications. Useful in plugins for WooCommerce! All you need to do is mark the author and put a copy of the license.
 
+## Example usage
+```php
+$package = new PolishPostAPI();
+var_dump($package->get_package('testp0'));
+```
 ## What's included
 ```
 polishpost_api/
