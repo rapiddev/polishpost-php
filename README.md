@@ -17,6 +17,8 @@ With the help of this simple class, you can easily use the Polish Post API in yo
 
 ## Example usage
 ```php
+include('polishpost_api.php');
+
 $package = new PolishPostAPI();
 var_dump($package->get_package('testp0'));
 ```
