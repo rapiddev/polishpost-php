@@ -2,7 +2,6 @@
 /**
  *
  * @package Polish Post API
- * @subpackage Main Class
  * @author RapidDev | Polish technology company
  * @copyright Copyright (c) 2018, RapidDev
  *
@@ -14,11 +13,30 @@
  * More info about API and documentation can be found on:
  * http://www.poczta-polska.pl/webservices/
  *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+	/**
+	*
+	* PolishPostAPI
+	*
+	* @author   Leszek Pomianowski <https://rapiddev.pl>
+	* @version  $Id: polishpost_api.php,v 0.20 2018/08/10
+	* @access   public
+	*/
 	if (!class_exists('PolishPostAPI')) {
 		class PolishPostAPI
 		{
-
 			/**
 			* Data for the request, username
 			* @var string
