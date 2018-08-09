@@ -87,8 +87,8 @@
 			/**
 			* get_package
 			*
-			* @return	array	Correct data table
-			* @param    string	$package package number, no spaces or brackets, the default (test) should work
+			* @return   array    Correct data table
+			* @param    string   $package package number, no spaces or brackets, the default (test) should work
 			* @access   public
 			*/
 			public function get_package($package = 'testp0')
@@ -103,9 +103,9 @@
 			/**
 			* parse_xml
 			*
-			* @return	array	Correct data table
-			* @param    string	$xml_data xml data is prepared for processing and then changed from object to table
-			* @access   private
+			* @return  array   Correct data table
+			* @param   string  $xml_data xml data is prepared for processing and then changed from object to table
+			* @access  private
 			*/
 			private function parse_xml($xml_data)
 			{
@@ -123,7 +123,7 @@
 			/**
 			* curl
 			*
-			* @return	array/null	Gets data from Poczta Polska, and then returns XML as a STRING. Only verifies CURL errors
+			* @return   array/null   Gets data from Poczta Polska, and then returns XML as a STRING. Only verifies CURL errors
 			* @access   private
 			*/
 			private function curl()
