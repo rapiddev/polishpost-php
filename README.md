@@ -35,6 +35,8 @@ Put the class in your project files, and then use the PolishPostApi.
 * The class communicates with Poczta Polska, which is owned by Poczta Polska S.A.
 
 ## Update history
+#### 0.3.0
+1. The get_last_event method was created and tested
 #### 0.2.0
 1. Class was created
 2. The get_package method was created and tested
