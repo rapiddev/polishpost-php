@@ -5,7 +5,6 @@ Get parcel information, it's easy!
 
 ![PHP version from PHP-Eye](https://img.shields.io/php-eye/symfony/symfony.svg?style=for-the-badge)
 ![CRAN](https://img.shields.io/cran/l/devtools.svg?style=for-the-badge)
-![234234](https://img.shields.io/github/languages/code-size/badges/shields.svg?style=for-the-badge)
 
 ***
 
