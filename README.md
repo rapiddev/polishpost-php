@@ -18,8 +18,8 @@ With the help of this simple class, you can easily use the Polish Post API in yo
 ```php
 include('polishpost_api.php');
 
-$package = new PolishPostAPI();
-var_dump($package->get_package('testp0'));
+$package = new PolishPostAPI('testp0');
+$event = $package->get_last_event();
 ```
 ## What's included
 ```
