@@ -38,6 +38,13 @@
 		class PolishPostAPI
 		{
 			/**
+			* Package number
+			* @var string
+			* @access public
+			*/
+			public $package;
+
+			/**
 			* Data for the request, username
 			* @var string
 			* @access private
@@ -73,13 +80,21 @@
 			private $request_urn;
 
 			/**
+			* Result of curl
+			* @var string
+			* @access private
+			*/
+			private $parsed_xml = NULL;
+
+			/**
 			* constructor
 			*
 			* @param string $username in most cases the default should work
 			* @param string $password in most cases the default should work
 			*/
-			public function __construct($username = 'sledzeniepp', $password = 'PPSA')
+			public function __construct($package = 'testp0', $username = 'sledzeniepp', $password = 'PPSA')
 			{
+				$this->package = $package;
 				$this->username = $username;
 				$this->password = $password;
 			}
@@ -91,13 +106,18 @@
 			* @param    string   $package package number, no spaces or brackets, the default (test) should work
 			* @access   public
 			*/
-			public function get_package($package = 'testp0')
+			public function get_package()
 			{
 				$this->request_url = 'http://tt.poczta-polska.pl/Sledzenie/services/Sledzenie.SledzenieHttpSoap11Endpoint/';
 				$this->request_urn = 'sprawdzPrzesylkePl';
-				$this->request_body = '<ns1:numer>'.$package.'</ns1:numer>';
+				$this->request_body = '<ns1:numer>'.$this->package.'</ns1:numer>';
 
-				return $this->parse_xml($this->curl());
+				if ($this->parsed_xml === NULL) {
+					$this->curl();
+					$this->parsed_xml = $this->parse_xml($this->curl);
+				}
+				
+				return $this->parsed_xml;
 			}
 
 			/**
@@ -107,16 +127,19 @@
 			* @param    string   $package package number, no spaces or brackets, the default (test) should work
 			* @access   public
 			*/
-			public function get_last_event($package = 'testp0')
+			public function get_last_event()
 			{
-				$package = $this->get_package($package);
+				$package = $this->get_package();
 				
 				if (isset($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']))
 				{
 					$event = end($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']);
-					if (isset($event['nazwa'])) {
+					if (isset($event['nazwa']))
+					{
 						return $event['nazwa'];
-					}else{
+					}
+					else
+					{
 						return $event;
 					}
 				}
@@ -126,10 +149,14 @@
 				}
 			}
 
+			public function get_destination()
+			{
+				$package = $this->get_package();
+			}
+
 			/**
 			* parse_xml
 			*
-			* @return  array   Correct data table or null
 			* @param   string  $xml_data xml data is prepared for processing and then changed from object to table
 			* @access  private
 			*/
@@ -143,13 +170,11 @@
 				{
 					return NULL;
 				}
-				
 			}
 
 			/**
 			* curl
 			*
-			* @return   array/null   Gets data from Poczta Polska, and then returns XML as a STRING. Only verifies CURL errors
 			* @access   private
 			*/
 			private function curl()
@@ -169,14 +194,19 @@
 				curl_close($SOAP_CURL);
 				if (isset($error_msg))
 				{
-					return $error_msg;
+					$this->curl = $error_msg;
 				}
 				else
 				{
-					return $result;
+					$this->curl = $result;
 				}
 			}
 		}
 	}
+
+	$package = new PolishPostAPI('00459007736006736603');
+	$event = $package->get_last_event();
+
+	highlight_string("<?php\n" . var_export($event, true) . ";\n?>\n");
 
 ?>
