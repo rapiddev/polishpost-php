@@ -103,7 +103,6 @@
 			* get_package
 			*
 			* @return   array    Correct data table
-			* @param    string   $package package number, no spaces or brackets, the default (test) should work
 			* @access   public
 			*/
 			public function get_package()
@@ -113,8 +112,7 @@
 				$this->request_body = '<ns1:numer>'.$this->package.'</ns1:numer>';
 
 				if ($this->parsed_xml === NULL) {
-					$this->curl();
-					$this->parsed_xml = $this->parse_xml($this->curl);
+					$this->parsed_xml = self::parse_xml(self::curl());
 				}
 				
 				return $this->parsed_xml;
@@ -123,13 +121,12 @@
 			/**
 			* get_last_event
 			*
-			* @return   array    Correct data table
-			* @param    string   $package package number, no spaces or brackets, the default (test) should work
+			* @return   string    Correct data table
 			* @access   public
 			*/
 			public function get_last_event()
 			{
-				$package = $this->get_package();
+				$package = self::get_package();
 				
 				if (isset($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']))
 				{
@@ -151,12 +148,13 @@
 
 			public function get_destination()
 			{
-				$package = $this->get_package();
+				$package = self::get_package();
 			}
 
 			/**
 			* parse_xml
 			*
+			* @return  array   parsed XML data
 			* @param   string  $xml_data xml data is prepared for processing and then changed from object to table
 			* @access  private
 			*/
@@ -175,6 +173,7 @@
 			/**
 			* curl
 			*
+			* @return   string   XML data as string
 			* @access   private
 			*/
 			private function curl()
@@ -194,11 +193,11 @@
 				curl_close($SOAP_CURL);
 				if (isset($error_msg))
 				{
-					$this->curl = $error_msg;
+					return $error_msg;
 				}
 				else
 				{
-					$this->curl = $result;
+					return $result;
 				}
 			}
 		}
@@ -207,6 +206,9 @@
 	$package = new PolishPostAPI('00459007736006736603');
 	$event = $package->get_last_event();
 
+	$package = $package->get_package();
+
 	highlight_string("<?php\n" . var_export($event, true) . ";\n?>\n");
 
+	highlight_string("<?php\n" . var_export($package, true) . ";\n?>\n");
 ?>
