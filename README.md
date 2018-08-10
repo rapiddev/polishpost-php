@@ -21,6 +21,15 @@ include('polishpost_api.php');
 $package = new PolishPostAPI('testp0');
 $event = $package->get_last_event();
 ```
+
+## Available methods
+```php
+$package->get_package();
+$package->get_posting_date();
+$package->get_events();
+$package->get_last_event();
+```
+
 ## What's included
 ```
 polishpost_api/
@@ -35,6 +44,9 @@ Put the class in your project files, and then use the PolishPostApi.
 * The class communicates with Poczta Polska, which is owned by Poczta Polska S.A.
 
 ## Update history
+#### 0.4.0
+1. The get_posting_date method was created and tested
+2. The get_events method was created and tested
 #### 0.3.0
 1. The get_last_event method was created and tested
 #### 0.2.0
