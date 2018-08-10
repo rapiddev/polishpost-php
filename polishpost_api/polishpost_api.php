@@ -119,26 +119,17 @@
 			}
 
 			/**
-			* get_last_event
+			* get_events
 			*
-			* @return   string    Correct data table
+			* @return   array    Correct data table
 			* @access   public
 			*/
-			public function get_last_event()
+			public function get_events()
 			{
 				$package = self::get_package();
-				
 				if (isset($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']))
 				{
-					$event = end($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie']);
-					if (isset($event['nazwa']))
-					{
-						return $event['nazwa'];
-					}
-					else
-					{
-						return $event;
-					}
+					return $package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['zdarzenia']['zdarzenie'];
 				}
 				else
 				{
@@ -146,9 +137,40 @@
 				}
 			}
 
-			public function get_destination()
+			/**
+			* get_last_event
+			*
+			* @return   array    Correct data table
+			* @access   public
+			*/
+			public function get_last_event()
+			{
+				$events = self::get_events();
+
+				if ($events !== NULL)
+				{
+					return end($events);
+				}
+			}
+
+			/**
+			* get_posting_date
+			*
+			* @return   string    Correct data
+			* @access   public
+			*/
+			public function get_posting_date()
 			{
 				$package = self::get_package();
+
+				if (isset($package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['dataNadania']))
+				{
+					return $package['Body']['sprawdzPrzesylkePlResponse']['return']['danePrzesylki']['dataNadania'];
+				}
+				else
+				{
+					return NULL;
+				}
 			}
 
 			/**
