@@ -24,7 +24,7 @@ $event = $package->get_last_event();
 
 ## Application in practice
 ```php
-$package = new PolishPostAPI('00459007736006736603');
+$package = new PolishPostAPI('testp0');
 $event = $package->get_last_event();
 if (isset($event['czas']) && isset($event['nazwa']))
 {
