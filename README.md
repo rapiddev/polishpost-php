@@ -22,6 +22,22 @@ $package = new PolishPostAPI('testp0');
 $event = $package->get_last_event();
 ```
 
+## Application in practice
+```php
+$package = new PolishPostAPI('00459007736006736603');
+$event = $package->get_last_event();
+if (isset($event['czas']) && isset($event['nazwa']))
+{
+	$html = '<small>'.$event['czas'].'</small>';
+	$html .= '<p><strong>'.$event['nazwa'].'</strong></p>';
+}
+else
+{
+	$html = '<strong>'.__('Unknown shipment status', 'plugin_locale').'</strong>';
+}
+echo $html;
+```
+
 ## Available methods
 ```php
 $package->get_package();
