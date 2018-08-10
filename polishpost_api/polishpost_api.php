@@ -202,13 +202,4 @@
 			}
 		}
 	}
-
-	$package = new PolishPostAPI('00459007736006736603');
-	$event = $package->get_last_event();
-
-	$package = $package->get_package();
-
-	highlight_string("<?php\n" . var_export($event, true) . ";\n?>\n");
-
-	highlight_string("<?php\n" . var_export($package, true) . ";\n?>\n");
 ?>
