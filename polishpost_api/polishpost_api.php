@@ -3,7 +3,7 @@
  *
  * @package Polish Post API
  * @author RapidDev | Polish technology company
- * @copyright Copyright (c) 2018, RapidDev
+ * @copyright Copyright (c) 2018-2019, RapidDev
  *
  * @link https://github.com/rapiddev/polishpost-php
  * @license https://github.com/rapiddev/polishpost-php/blob/master/LICENSE
